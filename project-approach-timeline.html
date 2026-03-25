@@ -426,6 +426,7 @@
         if (i > 0) connectors[i - 1].classList.add('tl-adj');
         if (i < steps.length - 1) connectors[i].classList.add('tl-adj');
       }
+      notifyParent();
     }
 
     card.addEventListener('click', toggle);
@@ -439,6 +440,19 @@
     wrap.appendChild(card);
     track.appendChild(wrap);
   });
+
+  function notifyParent() {
+    setTimeout(function () {
+      try {
+        window.parent.postMessage(
+          { type: 'tlResize', height: document.documentElement.scrollHeight },
+          '*'
+        );
+      } catch (e) {}
+    }, 420);
+  }
+
+  window.addEventListener('load', notifyParent);
 })();
 </script>
 
