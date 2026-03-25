@@ -239,6 +239,13 @@
   @media (max-width: 600px) {
     body { padding: 1rem 0.85rem 1.5rem; }
     .tl-card { width: 188px; }
+    /* Cap expanded panel height so it fits in the fixed-height iframe on mobile.
+       Overflow scrolls inside the panel rather than being clipped by the iframe. */
+    .tl-detail.tl-open {
+      max-height: 380px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 </style>
 </head>
