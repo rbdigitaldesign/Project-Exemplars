@@ -11,7 +11,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: #ffffff;
     color: #2d2a3e;
-    padding: 1.5rem 1.25rem 2rem;
+    padding: 1.25rem 1rem 2rem;
     min-height: 100vh;
   }
 
@@ -27,7 +27,7 @@
     font-size: 0.82rem;
     color: #6b6784;
     line-height: 1.5;
-    margin-bottom: 1.1rem;
+    margin-bottom: 1rem;
   }
 
   .tl-hint {
@@ -45,7 +45,7 @@
     display: flex;
     align-items: flex-start;
     overflow-x: auto;
-    padding: 0.25rem 0.1rem 1.5rem;
+    padding: 0.5rem 0.25rem 1.75rem;
     gap: 0;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -56,36 +56,43 @@
   .tl-track::-webkit-scrollbar-track { background: #f4f2ff; border-radius: 3px; }
   .tl-track::-webkit-scrollbar-thumb { background: #cfc9f0; border-radius: 3px; }
 
-  /* ── Connector ── */
+  /* ── Connector — margin-top centres arrow at midpoint of collapsed card body ── */
   .tl-connector {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    padding: 0 3px;
-    margin-top: 34px;
+    padding: 0 5px;
+    margin-top: calc(1.1rem + 5.5rem - 15px);
+  }
+  .tl-connector svg path {
+    transition: stroke 0.4s ease, stroke-width 0.35s ease, opacity 0.4s ease;
+  }
+  .tl-connector.tl-adj svg path {
+    stroke: #a393e0;
+    stroke-width: 2.4;
+    opacity: 1;
+  }
+  .tl-connector.tl-adj {
+    animation: tlArrowPulse 1.8s ease-in-out infinite;
   }
 
   /* ── Card ── */
-  .tl-step-wrap {
-    display: flex;
-    align-items: flex-start;
-    flex-shrink: 0;
-  }
+  .tl-step-wrap { flex-shrink: 0; }
 
   .tl-card {
     width: 218px;
     background: #ffffff;
     border: 1.5px solid #d8dbe8;
     border-radius: 12px;
-    padding: 1.05rem 1rem 0.9rem;
     cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     outline: none;
     text-align: left;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.22s ease;
   }
   .tl-card:hover {
     border-color: #b0a6e8;
-    box-shadow: 0 3px 14px rgba(105,86,204,0.11);
+    box-shadow: 0 4px 18px rgba(105,86,204,0.11);
+    transform: translateY(-2px);
   }
   .tl-card:focus-visible {
     border-color: #6956cc;
@@ -94,7 +101,19 @@
   .tl-card[aria-expanded="true"] {
     border-color: #6956cc;
     background: #f9f8ff;
-    box-shadow: 0 4px 20px rgba(105,86,204,0.13);
+    box-shadow: 0 6px 24px rgba(105,86,204,0.16);
+    transform: translateY(-3px);
+  }
+  .tl-card.tl-glow {
+    animation: tlGlow 0.55s ease forwards;
+  }
+
+  /* ── Card body — fixed min-height makes all collapsed cards equal height ── */
+  .tl-card-body {
+    min-height: 11rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1.1rem 1rem 0;
   }
 
   .tl-card-top {
@@ -117,11 +136,22 @@
     font-size: 0.75rem;
     font-weight: 700;
     line-height: 1;
-    transition: background 0.2s;
+    transition: background 0.25s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .tl-card[aria-expanded="true"] .tl-num { background: #5244a8; }
+  .tl-card[aria-expanded="true"] .tl-num {
+    background: #5244a8;
+    transform: scale(1.2);
+  }
 
-  .tl-icon { font-size: 1.2rem; line-height: 1; }
+  .tl-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .tl-card[aria-expanded="true"] .tl-icon {
+    transform: scale(1.15) rotate(-5deg);
+  }
 
   .tl-title {
     font-family: 'Georgia', serif;
@@ -130,7 +160,7 @@
     color: #2d2a3e;
     margin: 0 0 0.38rem;
     line-height: 1.35;
-    transition: color 0.2s;
+    transition: color 0.25s ease;
   }
   .tl-card[aria-expanded="true"] .tl-title { color: #6956cc; }
 
@@ -138,16 +168,20 @@
     font-size: 0.79rem;
     color: #5c5875;
     line-height: 1.55;
-    margin: 0 0 0.6rem;
+    margin: 0;
+    flex: 1;
   }
 
+  /* Toggle hint pinned to bottom of card body */
   .tl-toggle-hint {
     font-size: 0.73rem;
     color: #b0a6d8;
     display: flex;
     align-items: center;
     gap: 0.28rem;
-    transition: color 0.2s;
+    transition: color 0.25s ease;
+    padding: 0.55rem 0 0.85rem;
+    margin-top: auto;
   }
   .tl-card:hover .tl-toggle-hint,
   .tl-card[aria-expanded="true"] .tl-toggle-hint { color: #6956cc; }
@@ -155,7 +189,7 @@
   .tl-chevron {
     display: block;
     flex-shrink: 0;
-    transition: transform 0.25s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   .tl-card[aria-expanded="true"] .tl-chevron { transform: rotate(180deg); }
 
@@ -163,18 +197,13 @@
   .tl-detail {
     max-height: 0;
     overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.38s ease, opacity 0.3s ease;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .tl-detail.tl-open {
-    max-height: 700px;
-    opacity: 1;
-  }
+  .tl-detail.tl-open { max-height: 480px; }
 
   .tl-detail-inner {
     border-top: 1px solid #e6e2f8;
-    margin-top: 0.7rem;
-    padding-top: 0.75rem;
+    padding: 0.8rem 1rem 1.1rem;
   }
 
   .tl-strong-label {
@@ -183,7 +212,7 @@
     text-transform: uppercase;
     letter-spacing: 0.07em;
     color: #6956cc;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.55rem;
   }
 
   .tl-detail ul {
@@ -209,9 +238,21 @@
     top: 0;
   }
 
+  /* ── Animations ── */
+  @keyframes tlGlow {
+    0%   { box-shadow: 0 4px 20px rgba(105,86,204,0); }
+    45%  { box-shadow: 0 6px 36px rgba(105,86,204,0.3); }
+    100% { box-shadow: 0 6px 24px rgba(105,86,204,0.16); }
+  }
+
+  @keyframes tlArrowPulse {
+    0%, 100% { opacity: 0.65; }
+    50%       { opacity: 1; }
+  }
+
   /* ── Responsive ── */
   @media (max-width: 600px) {
-    body { padding: 1rem 0.9rem 1.5rem; }
+    body { padding: 1rem 0.85rem 1.5rem; }
     .tl-card { width: 188px; }
   }
 </style>
@@ -310,12 +351,38 @@
   var track = document.getElementById('tlTrack');
   if (!track) return;
 
+  var connectors = [];
+
+  function showItems(detail) {
+    var items = detail.querySelectorAll('li');
+    items.forEach(function (item, idx) {
+      item.style.transition = 'none';
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(10px)';
+      setTimeout(function () {
+        item.style.transition = 'opacity 0.32s ease ' + (0.08 + idx * 0.07) + 's, transform 0.32s ease ' + (0.08 + idx * 0.07) + 's';
+        item.style.opacity = '1';
+        item.style.transform = 'translateY(0)';
+      }, 20);
+    });
+  }
+
+  function hideItems(detail) {
+    var items = detail.querySelectorAll('li');
+    items.forEach(function (item) {
+      item.style.transition = 'none';
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(10px)';
+    });
+  }
+
   steps.forEach(function (step, i) {
     if (i > 0) {
       var conn = document.createElement('div');
       conn.className = 'tl-connector';
       conn.setAttribute('aria-hidden', 'true');
-      conn.innerHTML = '<svg width="22" height="16" viewBox="0 0 22 16" fill="none"><path d="M1 8h17M14 4l4 4-4 4" stroke="#cfc9f0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      conn.innerHTML = '<svg width="40" height="30" viewBox="0 0 40 30" fill="none"><path d="M2 15h30M24 6l10 9-10 9" stroke="#d4ceee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      connectors.push(conn);
       track.appendChild(conn);
     }
 
@@ -334,15 +401,17 @@
     card.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + step.title);
 
     card.innerHTML =
-      '<div class="tl-card-top">' +
-        '<span class="tl-num" aria-hidden="true">' + (i + 1) + '</span>' +
-        '<span class="tl-icon" aria-hidden="true">' + step.icon + '</span>' +
-      '</div>' +
-      '<div class="tl-title">' + step.title + '</div>' +
-      '<p class="tl-desc">' + step.desc + '</p>' +
-      '<div class="tl-toggle-hint" aria-hidden="true">' +
-        'What strong work looks like' +
-        '<svg class="tl-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+      '<div class="tl-card-body">' +
+        '<div class="tl-card-top">' +
+          '<span class="tl-num" aria-hidden="true">' + (i + 1) + '</span>' +
+          '<span class="tl-icon" aria-hidden="true">' + step.icon + '</span>' +
+        '</div>' +
+        '<div class="tl-title">' + step.title + '</div>' +
+        '<p class="tl-desc">' + step.desc + '</p>' +
+        '<div class="tl-toggle-hint" aria-hidden="true">' +
+          'What strong work looks like' +
+          '<svg class="tl-chevron" width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 4.5l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</div>' +
       '</div>' +
       '<div class="tl-detail" id="' + detailId + '" role="region" aria-label="Strong work at stage ' + (i + 1) + ': ' + step.title + '">' +
         '<div class="tl-detail-inner">' +
@@ -354,12 +423,22 @@
     function toggle() {
       var detail = document.getElementById(detailId);
       var expanded = card.getAttribute('aria-expanded') === 'true';
+
       if (expanded) {
         card.setAttribute('aria-expanded', 'false');
         detail.classList.remove('tl-open');
+        hideItems(detail);
+        if (i > 0) connectors[i - 1].classList.remove('tl-adj');
+        if (i < steps.length - 1) connectors[i].classList.remove('tl-adj');
       } else {
         card.setAttribute('aria-expanded', 'true');
+        card.classList.remove('tl-glow');
+        void card.offsetWidth;
+        card.classList.add('tl-glow');
         detail.classList.add('tl-open');
+        showItems(detail);
+        if (i > 0) connectors[i - 1].classList.add('tl-adj');
+        if (i < steps.length - 1) connectors[i].classList.add('tl-adj');
       }
     }
 
