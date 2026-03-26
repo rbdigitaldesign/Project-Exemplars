@@ -47,7 +47,7 @@
     align-items: center;
     flex-shrink: 0;
     padding: 0 5px;
-    margin-top: calc(1.1rem + 5.5rem - 15px);
+    margin-top: calc(35px + 1.1rem + 5.5rem - 15px);
   }
   .tl-connector svg path {
     transition: stroke 0.4s ease, stroke-width 0.35s ease, opacity 0.4s ease;
@@ -72,6 +72,7 @@
     cursor: pointer;
     outline: none;
     text-align: left;
+    overflow: hidden;
     transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.22s ease;
   }
   .tl-card:hover {
@@ -91,6 +92,21 @@
   }
   .tl-card.tl-glow {
     animation: tlGlow 0.55s ease forwards;
+  }
+
+  /* ── Week badge ── */
+  .tl-week-badge {
+    background: linear-gradient(135deg, #f5a623 0%, #e06d0b 100%);
+    color: #fff;
+    font-size: 0.63rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
   }
 
   /* ── Card body — fixed min-height makes all collapsed cards equal height ── */
@@ -255,7 +271,7 @@
   <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
     <path d="M2 7.5h10M9 4l3.5 3.5L9 11" stroke="#b0a6d8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-  Scroll to see all 6 stages
+  Scroll to see all 6 stages &mdash; click any stage to collapse or re-expand
 </p>
 
 <div class="tl-track" id="tlTrack" role="list" aria-label="Project approach stages"></div>
@@ -266,6 +282,7 @@
     {
       icon: "\uD83D\uDD0D",
       title: "Define the Problem",
+      week: "Week 4",
       desc: "Start by understanding what the problem really is \u2014 not just what it looks like on the surface.",
       strong: [
         "You can explain the problem clearly to someone unfamiliar with it",
@@ -279,6 +296,7 @@
     {
       icon: "\uD83D\uDC65",
       title: "Understand Stakeholders",
+      week: "Week 5",
       desc: "Think carefully about who is involved, who is affected, and whose needs might conflict.",
       strong: [
         "You\u2019ve identified more than just the most obvious stakeholders",
@@ -291,6 +309,7 @@
     {
       icon: "\u270F\uFE0F",
       title: "Design Your Approach",
+      week: "Week 6",
       desc: "Develop a response that is realistic, specific, and connected to what you\u2019ve learned.",
       strong: [
         "Your idea connects clearly to the problem you defined",
@@ -304,6 +323,7 @@
     {
       icon: "\u2696\uFE0F",
       title: "Consider Risks and Constraints",
+      week: "Week 7",
       desc: "Think honestly about what could go wrong, what limits you, and what trade-offs are required.",
       strong: [
         "You\u2019ve identified specific risks \u2014 not just general ones",
@@ -317,6 +337,7 @@
     {
       icon: "\uD83E\uDD16",
       title: "Use AI Thoughtfully",
+      week: "Week 8",
       desc: "Be intentional and transparent about where AI helps \u2014 and where your own judgment matters more.",
       strong: [
         "You can explain what AI was used for and why at each stage",
@@ -329,6 +350,7 @@
     {
       icon: "\uD83D\uDD04",
       title: "Reflect and Refine",
+      week: "Weeks 9\u201310",
       desc: "Look back at how your thinking developed and what changed as you worked through the project.",
       strong: [
         "You can explain how your understanding of the problem shifted over time",
@@ -389,11 +411,12 @@
     card.className = 'tl-card';
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-expanded', 'false');
+    card.setAttribute('aria-expanded', 'true');
     card.setAttribute('aria-controls', detailId);
     card.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + step.title);
 
     card.innerHTML =
+      '<div class="tl-week-badge">\uD83D\uDCC5 Aim for \u00B7 ' + step.week + '</div>' +
       '<div class="tl-card-body">' +
         '<div class="tl-card-top">' +
           '<span class="tl-num" aria-hidden="true">' + (i + 1) + '</span>' +
@@ -406,7 +429,7 @@
           '<svg class="tl-chevron" width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 4.5l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
         '</div>' +
       '</div>' +
-      '<div class="tl-detail" id="' + detailId + '" role="region" aria-label="Strong work at stage ' + (i + 1) + ': ' + step.title + '">' +
+      '<div class="tl-detail tl-open" id="' + detailId + '" role="region" aria-label="Strong work at stage ' + (i + 1) + ': ' + step.title + '">' +
         '<div class="tl-detail-inner">' +
           '<div class="tl-strong-label">What strong work looks like</div>' +
           '<ul>' + step.strong.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
@@ -446,6 +469,18 @@
 
     wrap.appendChild(card);
     track.appendChild(wrap);
+  });
+
+  /* ── All cards start expanded — activate all connectors and run staggered load animation ── */
+  connectors.forEach(function (conn) {
+    conn.classList.add('tl-adj');
+  });
+
+  steps.forEach(function (_, i) {
+    setTimeout(function () {
+      var detail = document.getElementById('tl-detail-' + i);
+      if (detail) showItems(detail);
+    }, 80 + i * 130);
   });
 
   function notifyParent() {
