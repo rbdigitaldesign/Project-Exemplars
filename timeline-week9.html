@@ -44,7 +44,7 @@
     align-items: center;
     flex-shrink: 0;
     padding: 0 5px;
-    margin-top: calc(24px + 5.5rem - 15px);
+    margin-top: calc(24px + 6.5rem - 15px);
   }
   .tl-connector svg path {
     transition: stroke 0.4s ease, stroke-width 0.35s ease, opacity 0.4s ease;
@@ -124,7 +124,7 @@
 
   /* Card body — fixed height keeps all collapsed cards equal */
   .tl-card-body {
-    height: 12rem;
+    height: 14rem;
     display: flex;
     flex-direction: column;
     padding: 1.1rem 1rem 0;
@@ -210,12 +210,12 @@
     overflow: hidden;
     transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
   }
-  .tl-detail.tl-open { max-height: 300px; }
+  .tl-detail.tl-open { max-height: 420px; }
 
   .tl-detail-inner {
     border-top: 1px solid #C1B5FF;
     padding: 0.8rem 1rem 1.1rem;
-    min-height: 220px;
+    min-height: 320px;
   }
 
   .tl-strong-label {
@@ -259,7 +259,7 @@
   @media (max-width: 600px) {
     body { padding: 1rem 0.85rem 1.5rem; }
     .tl-card { width: 188px; }
-    .tl-detail.tl-open { max-height: 300px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .tl-detail.tl-open { max-height: 420px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   }
 </style>
 </head>
