@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Live &amp; Local — Conference Poster Exemplar</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 4rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+    color: #2d2a3e;
+  }
+
+  /* ── Screen note ── */
+  .screen-note {
+    background: #2d2a3e;
+    color: #c4b8f8;
+    font-size: 0.78rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 1.25rem;
+    max-width: 794px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .screen-note span { color: #9e99bb; }
+  .print-btn {
+    background: #6956cc;
+    color: white;
+    border: none;
+    padding: 0.35rem 0.9rem;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .print-btn:hover { background: #5646b0; }
+
+  /* ── Poster shell ── */
+  .poster {
+    width: 794px;
+    background: #ffffff;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Header ── */
+  .ph {
+    background: #2d2a3e;
+    padding: 1.4rem 1.8rem 1.2rem;
+  }
+  .ph-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9e99bb;
+    margin-bottom: 0.35rem;
+  }
+  .ph-title {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: #c4b8f8;
+    margin-bottom: 0.4rem;
+  }
+  .ph-subtitle {
+    font-size: 0.88rem;
+    color: #e0dbf8;
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 75%;
+    margin-bottom: 0.75rem;
+  }
+  .ph-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .ph-authors {
+    font-size: 0.72rem;
+    color: #b0a8d8;
+    line-height: 1.6;
+  }
+  .ph-pills {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .pill {
+    background: rgba(105,86,204,0.35);
+    border: 1px solid rgba(105,86,204,0.55);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.63rem;
+    color: #d4ccf5;
+  }
+
+  /* ── Body columns ── */
+  .pb {
+    display: grid;
+    grid-template-columns: 27% 46% 27%;
+    flex: 1;
+  }
+  .col {
+    padding: 1rem 0.9rem;
+    border-right: 1px solid #e8e5f8;
+  }
+  .col:last-child { border-right: none; }
+
+  /* ── Section ── */
+  .sec { margin-bottom: 0.9rem; }
+  .sec-title {
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: #6956cc;
+    border-bottom: 2px solid #6956cc;
+    padding-bottom: 0.22rem;
+    margin-bottom: 0.55rem;
+  }
+  .sec-body {
+    font-size: 0.68rem;
+    line-height: 1.55;
+    color: #2d2a3e;
+  }
+
+  /* ── Problem callout ── */
+  .problem-quote {
+    background: #f4f2ff;
+    border-left: 3px solid #6956cc;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.68rem;
+    font-style: italic;
+    color: #2d2a3e;
+    line-height: 1.5;
+    margin-bottom: 0.55rem;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ── Stat boxes ── */
+  .stats { display: flex; gap: 0.4rem; margin-bottom: 0.55rem; }
+  .stat {
+    flex: 1;
+    background: #6956cc;
+    color: white;
+    padding: 0.5rem 0.55rem;
+    border-radius: 6px;
+  }
+  .stat-n {
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-l {
+    font-size: 0.58rem;
+    opacity: 0.82;
+    line-height: 1.35;
+    margin-top: 0.1rem;
+  }
+
+  /* ── Option cards ── */
+  .options { display: flex; flex-direction: column; gap: 0.3rem; }
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.38rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.65rem;
+    line-height: 1.4;
+  }
+  .opt.no { background: #f7f7f9; border: 1px solid #e0e0e8; color: #999; }
+  .opt.yes { background: #f4f2ff; border: 1px solid #a393e0; color: #2d2a3e; }
+  .opt-letter {
+    font-weight: 800;
+    font-size: 0.72rem;
+    flex-shrink: 0;
+    width: 14px;
+  }
+  .opt.no .opt-letter { color: #ccc; }
+  .opt.yes .opt-letter { color: #6956cc; }
+  .opt-mark { margin-left: auto; flex-shrink: 0; font-size: 0.72rem; }
+  .opt.no .opt-mark { color: #ddd; }
+  .opt.yes .opt-mark { color: #6956cc; }
+  .opt-note {
+    font-size: 0.6rem;
+    color: #888;
+    font-style: italic;
+    margin-top: 0.35rem;
+    line-height: 1.4;
+  }
+
+  /* ── Stakeholder SVG ── */
+  .stkh-svg { width: 100%; margin-bottom: 0.3rem; }
+  .stkh-caption {
+    font-size: 0.59rem;
+    color: #888;
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 0.55rem;
+  }
+
+  /* ── Model diagram ── */
+  .model {
+    background: #f4f2ff;
+    border-radius: 7px;
+    padding: 0.7rem 0.75rem 0.55rem;
+    margin-bottom: 0.55rem;
+  }
+  .model-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #6956cc;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.03em;
+  }
+  .model-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 0.45rem;
+  }
+  .model-node {
+    flex: 1;
+    background: white;
+    border: 1.5px solid #b0a6e8;
+    border-radius: 4px;
+    padding: 0.3rem 0.25rem;
+    font-size: 0.58rem;
+    color: #4f3fb0;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .model-node small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.54rem;
+    color: #7c6ec0;
+    margin-top: 0.15rem;
+  }
+  .model-arr {
+    display: flex;
+    align-items: center;
+    padding: 0 0.18rem;
+    color: #b0a6e8;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+  .model-note {
+    font-size: 0.59rem;
+    color: #6956cc;
+    font-style: italic;
+    text-align: center;
+    border-top: 1px solid #d9d2ff;
+    padding-top: 0.3rem;
+    line-height: 1.4;
+  }
+
+  /* ── AI split ── */
+  .ai-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+    margin-bottom: 0.45rem;
+  }
+  .ai-col-head {
+    font-size: 0.57rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.28rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1.5px solid currentColor;
+  }
+  .ai-col-head.yes { color: #6956cc; }
+  .ai-col-head.no  { color: #bbb; }
+  .ai-item {
+    font-size: 0.6rem;
+    line-height: 1.4;
+    color: #444;
+    padding-left: 0.7rem;
+    position: relative;
+    margin-bottom: 0.18rem;
+  }
+  .ai-item::before { content: '·'; position: absolute; left: 0.1rem; }
+  .ai-item.yes::before { color: #6956cc; }
+  .ai-item.no::before  { color: #ccc; }
+  .ai-item.no { color: #aaa; }
+  .ai-finding {
+    background: #fffbec;
+    border-left: 2.5px solid #d4a017;
+    padding: 0.38rem 0.5rem;
+    font-size: 0.6rem;
+    color: #5a4010;
+    line-height: 1.4;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── Insights ── */
+  .insight {
+    font-size: 0.64rem;
+    line-height: 1.45;
+    color: #2d2a3e;
+    padding-left: 0.9rem;
+    position: relative;
+    margin-bottom: 0.38rem;
+  }
+  .insight::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #6956cc;
+    font-weight: 700;
+    font-size: 0.65rem;
+  }
+
+  /* ── Scope box ── */
+  .scope-box {
+    background: #fafafa;
+    border: 1px solid #e0ddf5;
+    border-radius: 5px;
+    padding: 0.45rem 0.55rem;
+    font-size: 0.63rem;
+    line-height: 1.5;
+    color: #555;
+  }
+
+  /* ── Footer ── */
+  .pf {
+    background: #f4f2ff;
+    border-top: 2.5px solid #6956cc;
+    padding: 0.85rem 1.8rem 0.9rem;
+  }
+  .pf-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1.2rem;
+    align-items: start;
+  }
+  .pf-reflections-label {
+    font-size: 0.57rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6956cc;
+    margin-bottom: 0.45rem;
+  }
+  .reflections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.45rem 1rem;
+  }
+  .refl {
+    font-size: 0.6rem;
+    color: #444;
+    line-height: 1.45;
+  }
+  .refl-name {
+    display: block;
+    font-weight: 700;
+    color: #6956cc;
+    margin-bottom: 0.08rem;
+    font-size: 0.62rem;
+  }
+  .pf-course {
+    font-size: 0.56rem;
+    color: #9e99bb;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+  .pf-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .qr-box {
+    width: 78px;
+    height: 78px;
+    background: white;
+    border: 1px solid #d9d2ff;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+  }
+  .qr-caption {
+    font-size: 0.52rem;
+    color: #9e99bb;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ── Exemplar watermark strip ── */
+  .exemplar-strip {
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 14px,
+      rgba(105,86,204,0.06) 14px,
+      rgba(105,86,204,0.06) 28px
+    );
+    border-top: 1px solid #d9d2ff;
+    padding: 0.3rem 1.8rem;
+    font-size: 0.56rem;
+    color: #b0a8d8;
+    letter-spacing: 0.08em;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { background: white; padding: 0; }
+    .screen-note { display: none; }
+    .poster { box-shadow: none; width: 100%; }
+    @page { size: A1 portrait; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="screen-note">
+  <span>Displayed at A4 scale — prints to A1 at full size. This is a worked exemplar for educational purposes.</span>
+  <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="poster">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="ph">
+    <div class="ph-eyebrow">EDS Project · Worked Exemplar · University of Adelaide</div>
+    <div class="ph-title">LIVE &amp; LOCAL</div>
+    <div class="ph-subtitle">Designing a Platform to Sustain Adelaide's Independent Live Music Ecosystem</div>
+    <div class="ph-meta">
+      <div class="ph-authors">
+        Zoe Park &nbsp;·&nbsp; Daniel Russo &nbsp;·&nbsp; Aisha Okafor &nbsp;·&nbsp; Marcus Webb
+      </div>
+      <div class="ph-pills">
+        <span class="pill">Creative Arts</span>
+        <span class="pill">Business</span>
+        <span class="pill">Information Technology</span>
+        <span class="pill">Urban Planning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BODY ═══ -->
+  <div class="pb">
+
+    <!-- ── Column 1 ── -->
+    <div class="col">
+
+      <div class="sec">
+        <div class="sec-title">The Problem</div>
+        <div class="problem-quote">
+          "Adelaide's independent live music ecosystem is structurally disadvantaged by digital platforms optimised for scale — making it harder for emerging artists to build a local audience and for small venues to fill rooms."
+        </div>
+        <div class="sec-body" style="margin-bottom:0.5rem;">
+          The problem is not that audiences cannot find live music. It is that the existing digital infrastructure is designed against the people who need it most.
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-n">40+</div>
+            <div class="stat-l">independent venues closed nationally since 2020</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">&lt;2%</div>
+            <div class="stat-l">of streams reach artists with fewer than 1,000 monthly listeners</div>
+          </div>
+        </div>
+        <div class="sec-body" style="font-size:0.61rem;color:#888;font-style:italic;">
+          Source: Live Performance Australia (2023); platform economics research
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title">Why Existing Platforms Fall Short</div>
+        <div class="sec-body">
+          Algorithms optimised for engagement consistently surface what audiences already know. This reinforces popularity at the expense of discovery — and systematically disadvantages emerging artists who need visibility, not engagement optimisation.
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title">Design Options Considered</div>
+        <div class="options">
+          <div class="opt no">
+            <span class="opt-letter">A</span>
+            <span>Simple events listing — no curation or ranking</span>
+            <span class="opt-mark">✗</span>
+          </div>
+          <div class="opt no">
+            <span class="opt-letter">B</span>
+            <span>AI recommendation based on listening history</span>
+            <span class="opt-mark">✗</span>
+          </div>
+          <div class="opt yes">
+            <span class="opt-letter">C</span>
+            <span><strong>Human-AI hybrid discovery platform</strong> — AI surfaces underrepresented acts; human curators make editorial judgments</span>
+            <span class="opt-mark">✓</span>
+          </div>
+        </div>
+        <div class="opt-note">Option B was rejected: AI trained on listening history would replicate the structural bias the project set out to solve.</div>
+      </div>
+
+    </div>
+
+    <!-- ── Column 2 ── -->
+    <div class="col">
+
+      <div class="sec">
+        <div class="sec-title">Who Is Involved</div>
+        <svg class="stkh-svg" viewBox="0 0 330 210" xmlns="http://www.w3.org/2000/svg">
+          <!-- outer ring -->
+          <circle cx="165" cy="105" r="98" fill="none" stroke="#e8e5f8" stroke-width="1"/>
+          <!-- mid ring -->
+          <circle cx="165" cy="105" r="62" fill="none" stroke="#d9d2ff" stroke-width="1"/>
+          <!-- inner -->
+          <circle cx="165" cy="105" r="30" fill="#f4f2ff" stroke="#a393e0" stroke-width="1.5"/>
+
+          <!-- Inner labels -->
+          <text x="165" y="99" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" font-weight="800" fill="#6956cc">EMERGING</text>
+          <text x="165" y="109" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" font-weight="800" fill="#6956cc">ARTISTS</text>
+          <text x="165" y="119" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" font-weight="700" fill="#6956cc">+ VENUES</text>
+
+          <!-- Mid ring -->
+          <text x="165" y="49" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" font-weight="600" fill="#4f3fb0">Local Audiences</text>
+          <text x="219" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="600" fill="#4f3fb0">Music SA</text>
+          <text x="222" y="138" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="600" fill="#4f3fb0">Promoters</text>
+          <text x="108" y="138" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="600" fill="#4f3fb0">Booking Agents</text>
+          <text x="106" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="600" fill="#4f3fb0">Music Fans</text>
+
+          <!-- Outer ring -->
+          <text x="165" y="12" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" fill="#999">City of Adelaide / SA Tourism</text>
+          <text x="309" y="82" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" fill="#999">Tech Platforms</text>
+          <text x="309" y="92" text-anchor="middle" font-family="Arial,sans-serif" font-size="6" fill="#bbb">(Spotify, Meta)</text>
+          <text x="21"  y="82" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" fill="#999">Sponsors /</text>
+          <text x="21"  y="92" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" fill="#999">Brands</text>
+          <text x="165" y="200" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" fill="#999">Established / Touring Artists</text>
+
+          <!-- Tension line -->
+          <line x1="256" y1="85" x2="228" y2="97" stroke="#e06b6b" stroke-width="1" stroke-dasharray="2,2"/>
+          <text x="241" y="82" text-anchor="middle" font-family="Arial,sans-serif" font-size="5.5" fill="#e06b6b">⚡ competing interests</text>
+        </svg>
+        <div class="stkh-caption">Tech platforms (outer ring) have business models in direct tension with the problem being solved — they benefit from engagement, not discovery.</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title">The Design Model</div>
+        <div class="model">
+          <div class="model-label">Human–AI Curation Architecture</div>
+          <div class="model-flow">
+            <div class="model-node">
+              Listings
+              <small>artists &amp; venues submit</small>
+            </div>
+            <div class="model-arr">›</div>
+            <div class="model-node">
+              AI Layer
+              <small>gaps · patterns · under&shy;representation</small>
+            </div>
+            <div class="model-arr">›</div>
+            <div class="model-node">
+              Editorial
+              <small>local curators &amp; writers</small>
+            </div>
+            <div class="model-arr">›</div>
+            <div class="model-node">
+              Discovery
+              <small>audiences</small>
+            </div>
+          </div>
+          <div class="model-note">AI handles the information problem. People handle the taste and values problem.</div>
+        </div>
+        <div class="sec-body">
+          Editorial independence is structurally protected from commercial pressure. Curation criteria are transparent and publicly published. The platform's explicit design objective is to surface the unfamiliar, not optimise for the already-liked.
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title">Key Risks Identified</div>
+        <div class="insight">Algorithmic bias toward English-language mainstream genres — requires intervention at the data and design level, not just as a policy statement</div>
+        <div class="insight">Platform dependency: building audiences on infrastructure you don't own replicates the structural problem one generation later</div>
+        <div class="insight">Editorial independence needs structural protection — commercial pressure from advertising and sponsorship creates a real conflict of interest</div>
+      </div>
+
+    </div>
+
+    <!-- ── Column 3 ── -->
+    <div class="col">
+
+      <div class="sec">
+        <div class="sec-title">AI in This Project</div>
+        <div class="ai-grid">
+          <div>
+            <div class="ai-col-head yes">Used</div>
+            <div class="ai-item yes">Industry research synthesis</div>
+            <div class="ai-item yes">Audience persona drafts</div>
+            <div class="ai-item yes">Platform wireframe descriptions</div>
+            <div class="ai-item yes">Curation criteria drafting</div>
+            <div class="ai-item yes">Feasibility scoping</div>
+          </div>
+          <div>
+            <div class="ai-col-head no">Not used</div>
+            <div class="ai-item no">Editorial content</div>
+            <div class="ai-item no">Music recommendations</div>
+            <div class="ai-item no">Revenue / partnership model</div>
+            <div class="ai-item no">Ethical analysis</div>
+            <div class="ai-item no">Problem statement</div>
+          </div>
+        </div>
+        <div class="ai-finding">
+          <strong>Finding:</strong> AI-generated audience personas skewed younger and more digitally confident than evidence supported. Every AI output required critical review and substantial revision.
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title">What We Found</div>
+        <div class="insight">The core problem is structural disadvantage, not poor discoverability — solving discovery without addressing structure changes nothing</div>
+        <div class="insight">Designing an AI system to be intentionally bad at one thing (familiarity) so it can be good at another (discovery) is a fundamentally different design problem</div>
+        <div class="insight">Live music is urban infrastructure — cities with healthy independent scenes attract residents, students, and visitors</div>
+        <div class="insight">There is no commercially obvious revenue model for this platform that does not eventually compromise what makes it worth building</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title">Scope and Limitations</div>
+        <div class="scope-box">
+          This project produced a <strong>service design model and platform blueprint</strong>. It does not address venue economics, musician pay rates, or ticketing fees — structural problems that no platform solves. These were identified as assumptions the design carries, not problems it resolves.
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-title">What We Would Do Differently</div>
+        <div class="insight">Co-design with musicians and venue owners from day one, not desk research only</div>
+        <div class="insight">Identify revenue model conflicts earlier — we found the advertising tension very late</div>
+        <div class="insight">Agree AI use boundaries upfront rather than deciding as we went</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="pf">
+    <div class="pf-inner">
+      <div>
+        <div class="pf-reflections-label">Team Reflections</div>
+        <div class="reflections">
+          <div class="refl">
+            <span class="refl-name">Zoe Park — Creative Arts</span>
+            "Working out why Spotify's algorithm works the way it does — and who it's actually designed to serve — has genuinely changed how I use it."
+          </div>
+          <div class="refl">
+            <span class="refl-name">Daniel Russo — Business</span>
+            "Every revenue stream we considered created a conflict of interest. There's no commercially obvious way to build this without eventually compromising what makes it worth building."
+          </div>
+          <div class="refl">
+            <span class="refl-name">Aisha Okafor — Information Technology</span>
+            "Designing an AI that is intentionally bad at giving you what you already like, so it can be good at discovery — that was a genuinely new way of thinking about recommendation systems."
+          </div>
+          <div class="refl">
+            <span class="refl-name">Marcus Webb — Urban Planning</span>
+            "Once I started thinking about live music as urban infrastructure rather than entertainment, the stakes of the project felt much higher."
+          </div>
+        </div>
+        <div class="pf-course">
+          EDS 4.2 Group Project &nbsp;·&nbsp; University of Adelaide &nbsp;·&nbsp; 2025 &nbsp;·&nbsp;
+          <em>This is a worked exemplar produced for educational purposes — not a real student submission</em>
+        </div>
+      </div>
+      <div class="pf-qr">
+        <div class="qr-box">
+          <svg width="62" height="62" viewBox="0 0 62 62" xmlns="http://www.w3.org/2000/svg">
+            <!-- QR placeholder pattern -->
+            <rect x="2" y="2" width="20" height="20" rx="2" fill="none" stroke="#6956cc" stroke-width="2"/>
+            <rect x="6" y="6" width="12" height="12" fill="#6956cc" opacity="0.25"/>
+            <rect x="8" y="8" width="8" height="8" fill="#6956cc" opacity="0.6"/>
+            <rect x="40" y="2" width="20" height="20" rx="2" fill="none" stroke="#6956cc" stroke-width="2"/>
+            <rect x="44" y="6" width="12" height="12" fill="#6956cc" opacity="0.25"/>
+            <rect x="46" y="8" width="8" height="8" fill="#6956cc" opacity="0.6"/>
+            <rect x="2" y="40" width="20" height="20" rx="2" fill="none" stroke="#6956cc" stroke-width="2"/>
+            <rect x="6" y="44" width="12" height="12" fill="#6956cc" opacity="0.25"/>
+            <rect x="8" y="46" width="8" height="8" fill="#6956cc" opacity="0.6"/>
+            <rect x="26" y="2" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="33" y="2" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="26" y="9" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="40" y="26" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="47" y="26" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="54" y="26" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="40" y="33" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="54" y="33" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="47" y="40" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="26" y="40" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="33" y="47" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="26" y="54" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="33" y="54" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="2" y="26" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="9" y="26" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="16" y="33" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+            <rect x="2" y="33" width="5" height="5" fill="#6956cc" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="qr-caption">Add project<br/>link here</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ EXEMPLAR STRIP ═══ -->
+  <div class="exemplar-strip">
+    WORKED EXEMPLAR — FOR EDUCATIONAL PURPOSES ONLY — NOT A REAL STUDENT SUBMISSION
+  </div>
+
+</div>
+
+</body>
+</html>
