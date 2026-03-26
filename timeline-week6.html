@@ -398,12 +398,12 @@
     card.className = 'tl-card' + (isCurrent ? ' tl-current' : '');
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-expanded', 'false');
+    card.setAttribute('aria-expanded', isCurrent ? 'true' : 'false');
     card.setAttribute('aria-controls', detailId);
     card.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + step.title);
 
     var badgeText = isCurrent
-      ? 'During \u00B7 ' + step.week + ' \u00B7 You\u2019re here'
+      ? step.week + ' \u00B7 You\u2019re here'
       : 'During \u00B7 ' + step.week;
 
     var hintText = isCurrent ? 'See what strong work looks like' : 'What strong work looks like';
@@ -459,6 +459,18 @@
     wrap.appendChild(card);
     track.appendChild(wrap);
   });
+
+  /* Auto-expand and animate the current stage on load */
+  setTimeout(function () {
+    var detail = document.getElementById('tl-detail-' + activeStage);
+    if (detail) {
+      detail.classList.add('tl-open');
+      showItems(detail);
+      if (activeStage > 0) connectors[activeStage - 1].classList.add('tl-adj');
+      if (activeStage < steps.length - 1) connectors[activeStage].classList.add('tl-adj');
+    }
+    notifyParent();
+  }, 200);
 
   function notifyParent() {
     setTimeout(function () {
