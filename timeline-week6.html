@@ -398,7 +398,7 @@
     card.className = 'tl-card' + (isCurrent ? ' tl-current' : '');
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-expanded', isCurrent ? 'true' : 'false');
+    card.setAttribute('aria-expanded', 'false');
     card.setAttribute('aria-controls', detailId);
     card.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + step.title);
 
@@ -459,18 +459,6 @@
     wrap.appendChild(card);
     track.appendChild(wrap);
   });
-
-  /* Auto-expand and animate the current stage on load */
-  setTimeout(function () {
-    var detail = document.getElementById('tl-detail-' + activeStage);
-    if (detail) {
-      detail.classList.add('tl-open');
-      showItems(detail);
-      if (activeStage > 0) connectors[activeStage - 1].classList.add('tl-adj');
-      if (activeStage < steps.length - 1) connectors[activeStage].classList.add('tl-adj');
-    }
-    notifyParent();
-  }, 200);
 
   function notifyParent() {
     setTimeout(function () {
