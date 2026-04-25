@@ -3,384 +3,319 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Project Approach — Week 4</title>
+<title>Project timeline — Week 4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital@0;1&display=swap" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: #ffffff;
-    color: #140F50;
-    padding: 1.25rem 1rem 2rem;
+    color: #333;
+    padding: 1.1rem 1rem 2rem;
   }
 
+  /* ── hint bar ── */
   .tl-hint {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.78rem;
-    color: #9884FF;
-    margin-bottom: 0.85rem;
+    font-size: 0.77rem;
+    color: #aaa;
+    margin-bottom: 0.9rem;
     user-select: none;
   }
 
+  /* ── track ── */
   .tl-track {
     display: flex;
     align-items: flex-start;
     overflow-x: auto;
-    padding: 0.5rem 0.25rem 1.75rem;
+    padding: 0.25rem 0.1rem 1.5rem;
     gap: 0;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: #C1B5FF #E6E1FF;
+    scrollbar-color: #c0c0c0 #f0f0f0;
   }
   .tl-track::-webkit-scrollbar { height: 5px; }
-  .tl-track::-webkit-scrollbar-track { background: #E6E1FF; border-radius: 3px; }
-  .tl-track::-webkit-scrollbar-thumb { background: #C1B5FF; border-radius: 3px; }
+  .tl-track::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 3px; }
+  .tl-track::-webkit-scrollbar-thumb { background: #c0c0c0; border-radius: 3px; }
 
+  /* ── connector arrows ── */
   .tl-connector {
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    padding: 0 5px;
-    margin-top: calc(24px + 6.5rem - 15px);
-  }
-  .tl-connector svg path {
-    transition: stroke 0.4s ease, stroke-width 0.35s ease, opacity 0.4s ease;
-  }
-  .tl-connector.tl-adj svg path {
-    stroke: #9884FF;
-    stroke-width: 2.4;
-    opacity: 1;
-  }
-  .tl-connector.tl-adj {
-    animation: tlArrowPulse 1.8s ease-in-out infinite;
+    padding: 0 4px;
+    margin-top: 3.2rem;
   }
 
+  /* ── cards ── */
   .tl-step-wrap { flex-shrink: 0; }
 
   .tl-card {
-    width: 218px;
-    background: #ffffff;
-    border: 1.5px solid #d8dbe8;
-    border-radius: 12px;
+    width: 210px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     cursor: pointer;
     outline: none;
     text-align: left;
-    overflow: hidden;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, transform 0.22s ease;
+    transition: box-shadow 0.22s ease, transform 0.2s ease;
   }
-  .tl-card:hover {
-    border-color: #9884FF;
-    box-shadow: 0 4px 18px rgba(131,107,255,0.15);
-    transform: translateY(-2px);
-  }
-  .tl-card:focus-visible {
-    border-color: #836BFF;
-    box-shadow: 0 0 0 3px rgba(131,107,255,0.25);
-  }
-  .tl-card[aria-expanded="true"] {
-    border-color: #836BFF;
-    background: #E6E1FF;
-    box-shadow: 0 6px 24px rgba(131,107,255,0.2);
-    transform: translateY(-3px);
-  }
+  .tl-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.13); }
+  .tl-card:focus-visible { box-shadow: 0 0 0 3px rgba(131,107,255,0.35); }
 
-  /* Current stage */
-  .tl-card.tl-current {
-    border: 2px solid #1448FF;
-    background: #D0DAFF;
-    box-shadow: 0 4px 20px rgba(20,72,255,0.18);
+  /* ── card header ── */
+  .tl-card-head {
+    padding: 0.65rem 0.9rem 0.55rem;
   }
-  .tl-card.tl-current:hover {
-    box-shadow: 0 6px 28px rgba(20,72,255,0.28);
-    transform: translateY(-3px);
-  }
-  .tl-card.tl-current[aria-expanded="true"] {
-    border-color: #1448FF;
-    background: #D0DAFF;
-    box-shadow: 0 6px 28px rgba(20,72,255,0.25);
-  }
-  .tl-card.tl-glow { animation: tlGlow 0.55s ease forwards; }
-
-  /* Badge */
-  .tl-week-badge {
-    color: #fff;
-    font-size: 0.63rem;
+  .tl-week-label {
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.9rem;
+    line-height: 1.3;
     display: flex;
     align-items: center;
-    gap: 0.3rem;
-    white-space: nowrap;
-    background: #836BFF;
+    gap: 0.45rem;
+    flex-wrap: wrap;
   }
-  .tl-card.tl-current .tl-week-badge {
-    background: linear-gradient(135deg, #1448FF 0%, #0F3AE0 100%);
+  .tl-phase-pill {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 0.25rem 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .tl-you-here {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 0.2rem;
   }
 
-  /* Card body — height set by JS equalisation after render */
+  /* ── card body ── */
   .tl-card-body {
+    padding: 0.75rem 0.9rem 0;
     display: flex;
     flex-direction: column;
-    padding: 1.1rem 1rem 0;
   }
-
-  .tl-card-top {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .tl-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px; height: 24px; min-width: 24px;
-    border-radius: 50%;
-    background: #836BFF;
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 700;
-    line-height: 1;
-    transition: background 0.25s ease, transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .tl-card.tl-current .tl-num { background: #1448FF; }
-  .tl-card[aria-expanded="true"] .tl-num { background: #140F50; transform: scale(1.2); }
-
-  .tl-icon {
-    font-size: 1.2rem; line-height: 1; display: inline-block;
-    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .tl-card[aria-expanded="true"] .tl-icon { transform: scale(1.15) rotate(-5deg); }
 
   .tl-title {
-    font-family: 'Georgia', serif;
-    font-size: 0.92rem;
+    font-family: 'Roboto Serif', Georgia, serif;
+    font-size: 0.88rem;
     font-weight: 600;
-    color: #140F50;
-    margin: 0 0 0.38rem;
     line-height: 1.35;
-    transition: color 0.25s ease;
+    margin-bottom: 0.35rem;
   }
-  .tl-card[aria-expanded="true"] .tl-title { color: #836BFF; }
-  .tl-card.tl-current[aria-expanded="true"] .tl-title { color: #1448FF; }
 
-  .tl-desc {
-    font-size: 0.79rem;
-    color: #3B376D;
+  .tl-question {
+    font-size: 0.77rem;
     line-height: 1.55;
     margin: 0;
     flex: 1;
-    overflow: hidden;
   }
 
+  /* toggle trigger */
   .tl-toggle-hint {
-    font-size: 0.73rem;
-    color: #9884FF;
+    font-size: 0.72rem;
     display: flex;
     align-items: center;
     gap: 0.28rem;
-    transition: color 0.25s ease;
-    padding: 0.55rem 0 0.85rem;
+    padding: 0.5rem 0 0.8rem;
     margin-top: auto;
     white-space: nowrap;
-    overflow: hidden;
+    transition: color 0.2s ease;
   }
-  .tl-card:hover .tl-toggle-hint,
-  .tl-card[aria-expanded="true"] .tl-toggle-hint { color: #836BFF; }
-  .tl-card.tl-current .tl-toggle-hint { color: #1448FF; }
-  .tl-card.tl-current[aria-expanded="true"] .tl-toggle-hint { color: #1448FF; }
-
   .tl-chevron {
-    display: block; flex-shrink: 0;
-    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    display: block;
+    flex-shrink: 0;
+    transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
   }
   .tl-card[aria-expanded="true"] .tl-chevron { transform: rotate(180deg); }
 
-  /* Detail — fixed max-height keeps all expanded cards equal */
+  /* ── expanded detail ── */
   .tl-detail {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+    transition: max-height 0.42s cubic-bezier(0.4,0,0.2,1);
   }
   .tl-detail.tl-open { max-height: 600px; }
 
   .tl-detail-inner {
-    border-top: 1px solid #C1B5FF;
-    padding: 0.8rem 1rem 1.1rem;
+    padding: 0.7rem 0.9rem 1rem;
   }
 
   .tl-strong-label {
-    font-size: 0.68rem;
+    font-size: 0.67rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: #836BFF;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.5rem;
   }
-  .tl-card.tl-current .tl-strong-label { color: #1448FF; }
 
   .tl-detail ul { list-style: none; padding: 0; margin: 0; }
   .tl-detail ul li {
-    font-size: 0.77rem;
-    color: #140F50;
-    line-height: 1.55;
-    margin-bottom: 0.38rem;
-    padding-left: 1.15rem;
+    font-size: 0.76rem;
+    line-height: 1.52;
+    margin-bottom: 0.36rem;
+    padding-left: 1.1rem;
     position: relative;
   }
   .tl-detail ul li::before {
     content: "\2713";
-    color: #836BFF;
     font-weight: 700;
     position: absolute;
     left: 0; top: 0;
   }
-  .tl-card.tl-current .tl-detail ul li::before { color: #1448FF; }
 
-  @keyframes tlGlow {
-    0%   { box-shadow: 0 4px 20px rgba(131,107,255,0); }
-    45%  { box-shadow: 0 6px 36px rgba(131,107,255,0.35); }
-    100% { box-shadow: 0 6px 24px rgba(131,107,255,0.2); }
-  }
-  @keyframes tlArrowPulse {
-    0%, 100% { opacity: 0.65; }
-    50%       { opacity: 1; }
-  }
+  /* ══════════════════════════════════════
+     STATE: active (current week)
+  ══════════════════════════════════════ */
+  .tl-card.is-active { border: 2px solid #006B75; box-shadow: 0 4px 16px rgba(0,107,117,0.18); }
+  .tl-card.is-active .tl-card-head { background: #006B75; }
+  .tl-card.is-active .tl-week-label { color: #ffffff; }
+  .tl-card.is-active .tl-phase-pill { background-color: #006B75; color: #ffffff; border: 1.5px solid rgba(255,255,255,0.4); }
+  .tl-card.is-active .tl-card-body { background: #f0faf9; }
+  .tl-card.is-active .tl-title { color: #006B75; }
+  .tl-card.is-active .tl-question { color: #2a2a2a; }
+  .tl-card.is-active .tl-toggle-hint { color: #006B75; }
+  .tl-card.is-active .tl-detail-inner { background: #f0faf9; border-top: 1px solid #b2dde0; }
+  .tl-card.is-active .tl-strong-label { color: #006B75; }
+  .tl-card.is-active .tl-detail ul li { color: #2a2a2a; }
+  .tl-card.is-active .tl-detail ul li::before { color: #006B75; }
+
+  /* ══════════════════════════════════════
+     STATE: completed (weeks before active)
+  ══════════════════════════════════════ */
+  .tl-card.is-done { border: 1px solid #d8dbe8; }
+  .tl-card.is-done .tl-card-head { background: #eae6f7; }
+  .tl-card.is-done .tl-week-label { color: #6956cc; }
+  .tl-card.is-done .tl-phase-pill { background-color: #eae6f7; color: #6956cc; }
+  .tl-card.is-done .tl-card-body { background: #ffffff; }
+  .tl-card.is-done .tl-title { color: #6956cc; }
+  .tl-card.is-done .tl-question { color: #333; }
+  .tl-card.is-done .tl-toggle-hint { color: #836BFF; }
+  .tl-card.is-done .tl-detail-inner { background: #ffffff; border-top: 1px solid #e2ddf5; }
+  .tl-card.is-done .tl-strong-label { color: #6956cc; }
+  .tl-card.is-done .tl-detail ul li { color: #333; }
+  .tl-card.is-done .tl-detail ul li::before { color: #836BFF; }
+
+  /* ══════════════════════════════════════
+     STATE: future (weeks after active)
+  ══════════════════════════════════════ */
+  .tl-card.is-future { border: 1px solid #e8e8e8; }
+  .tl-card.is-future .tl-card-head { background: #f3f3f6; }
+  .tl-card.is-future .tl-week-label { color: #aaa; }
+  .tl-card.is-future .tl-phase-pill { background-color: #f3f3f6; color: #aaa; }
+  .tl-card.is-future .tl-card-body { background: #ffffff; }
+  .tl-card.is-future .tl-title { color: #aaa; }
+  .tl-card.is-future .tl-question { color: #aaa; }
+  .tl-card.is-future .tl-toggle-hint { color: #c8c8c8; }
+  .tl-card.is-future .tl-detail-inner { background: #ffffff; border-top: 1px solid #e8e8e8; }
+  .tl-card.is-future .tl-strong-label { color: #bbb; }
+  .tl-card.is-future .tl-detail ul li { color: #bbb; }
+  .tl-card.is-future .tl-detail ul li::before { color: #ccc; }
 
   @media (max-width: 600px) {
-    body { padding: 1rem 0.85rem 1.5rem; }
-    .tl-card { width: 188px; }
-    .tl-detail.tl-open { max-height: 600px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    body { padding: 0.9rem 0.75rem 1.5rem; }
+    .tl-card { width: 185px; }
+    .tl-detail.tl-open { max-height: 500px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   }
 </style>
 </head>
 <body>
 
 <p class="tl-hint" aria-hidden="true">
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <path d="M2 7.5h10M9 4l3.5 3.5L9 11" stroke="#9884FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M1.5 7h9M7.5 3.5l3.5 3.5-3.5 3.5" stroke="#c0c0c0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
-  Scroll to see all 6 stages &mdash; click any stage to reveal the indicators
+  Scroll to see all weeks — click any card to expand the detail
 </p>
 
-<div class="tl-track" id="tlTrack" role="list" aria-label="Project approach stages"></div>
+<div class="tl-track" id="tlTrack" role="list" aria-label="Project timeline weeks 4 to 8"></div>
 
 <script>
 (function () {
-  var activeStage = 0;
+  var ACTIVE_WEEK = 4;
 
-  var steps = [
+  var weeks = [
     {
-      icon: "\uD83D\uDD0D", title: "Define the Problem", week: "Week 4",
-      desc: "Start by understanding what the problem really is \u2014 not just what it looks like on the surface.",
+      week: 4,
+      phase: "Empathise",
+      question: "What problem space are we working in, and what ideas does our group want to explore?",
       strong: [
-        "You can explain the problem clearly to someone unfamiliar with it",
-        "You\u2019ve looked at root causes, not just symptoms",
-        "You\u2019ve gathered evidence, research, or observations to support your understanding",
-        "You know who is affected and why the problem hasn\u2019t already been solved",
-        "You\u2019ve thought about what makes this problem difficult or worth addressing",
-        "You\u2019ve discussed as a group how AI will be used in this project \u2014 and where you\u2019ll draw the line"
+        "The group has arrived with individual ideas and brainstormed openly without filtering",
+        "A project direction has been chosen and can be described clearly in one sentence",
+        "Roles and responsibilities have been discussed, even if not yet finalised",
+        "The group can articulate what AI will do in the project, not just that it will be used",
+        "A first portfolio entry has been started documenting the project description and individual role"
       ]
     },
     {
-      icon: "\uD83D\uDC65", title: "Understand Stakeholders", week: "Week 5",
-      desc: "Think carefully about who is involved, who is affected, and whose needs might conflict.",
+      week: 5,
+      phase: "Define",
+      question: "Who is affected by this problem, and what do they actually need?",
       strong: [
-        "You\u2019ve identified more than just the most obvious stakeholders",
-        "You\u2019ve considered where needs might conflict or compete",
-        "You can explain what each group cares about and why",
-        "You\u2019ve thought about who has power to change things and who doesn\u2019t",
-        "You\u2019ve considered perspectives that might be easy to overlook"
+        "The group has identified at least four distinct stakeholders with specific needs and interests",
+        "Stakeholder needs have been mapped against each other: conflicts and alignments are noted",
+        "The group can state the problem they are solving in one clear sentence that refers to real people",
+        "AI use has been considered in relation to stakeholder needs, not just technical capability",
+        "The ePortfolio includes the stakeholder map and a reflection on what the analysis revealed"
       ]
     },
     {
-      icon: "\u270F\uFE0F", title: "Design Your Approach", week: "Week 6",
-      desc: "Develop a response that is realistic, specific, and connected to what you\u2019ve learned.",
+      week: 6,
+      phase: "Ideate",
+      question: "What are the different ways we could approach this, and which holds up under constraint?",
       strong: [
-        "Your idea connects clearly to the problem you defined",
-        "You can explain how it would work in practice",
-        "You\u2019ve thought about what it would realistically take to implement",
-        "You\u2019ve made deliberate design choices rather than going with the first idea",
-        "Your approach reflects the constraints and trade-offs you\u2019ve identified",
-        "You\u2019ve agreed on team roles and can explain who is responsible for what"
+        "The group has generated at least two distinct approaches, not just variations on one idea",
+        "Each approach has been assessed against real constraints: time, skills, data access, ethics",
+        "A single approach has been selected with a clear rationale, not just preference",
+        "The group understands what is being sacrificed with the chosen approach and has documented it",
+        "The ePortfolio includes the ideation notes and the decision rationale"
       ]
     },
     {
-      icon: "\u2696\uFE0F", title: "Consider Risks and Constraints", week: "Week 7",
-      desc: "Think honestly about what could go wrong, what limits you, and what trade-offs are required.",
+      week: 7,
+      phase: "Prototype",
+      question: "What is the simplest version of our solution we can make, show, and learn from?",
       strong: [
-        "You\u2019ve identified specific risks \u2014 not just general ones",
-        "You can explain ethical issues that relate directly to your project",
-        "You\u2019ve acknowledged what you\u2019d have to give up or compromise",
-        "You\u2019ve thought about unintended consequences for different groups",
-        "You\u2019ve considered feasibility, cost, and what could fail",
-        "You\u2019ve thought about AI-specific risks \u2014 such as over-reliance, bias in outputs, or unequal workload"
+        "The group has produced something tangible: a sketch, output, mockup, storyboard, or draft",
+        "The prototype is specific enough that someone outside the group can understand what it is trying to do",
+        "AI was used in the creation of the prototype and its role is documented",
+        "The group has noted what the prototype does not yet do: limitations are acknowledged honestly",
+        "The ePortfolio includes the prototype artefact and a reflection on decisions made"
       ]
     },
     {
-      icon: "\uD83E\uDD16", title: "Use AI Thoughtfully", week: "Week 8",
-      desc: "Be intentional and transparent about where AI helps \u2014 and where your own judgment matters more.",
+      week: 8,
+      phase: "Test",
+      question: "What did we learn from testing, and how does that change what we have built?",
       strong: [
-        "You can explain what AI was used for and why at each stage",
-        "You\u2019ve maintained critical judgment rather than accepting AI output uncritically",
-        "You\u2019ve noted where AI had limitations or where you had to revise what it produced",
-        "Your work reflects your thinking, not just AI-generated content",
-        "You\u2019ve been honest about where the boundaries of your AI use sit"
-      ]
-    },
-    {
-      icon: "\uD83D\uDD04", title: "Reflect and Refine", week: "Weeks 9\u201310",
-      desc: "Look back at how your thinking developed and what changed as you worked through the project.",
-      strong: [
-        "You can explain how your understanding of the problem shifted over time",
-        "You\u2019ve noted what feedback or iteration changed in your design",
-        "Your reflection is honest \u2014 including what didn\u2019t work",
-        "You\u2019ve connected your learning to the bigger picture of the project",
-        "You can explain what you would do differently with more time or resources",
-        "You can clearly describe your own individual contribution \u2014 not just what the group did, but what you specifically did and learned"
+        "The group received and documented peer feedback on their prototype",
+        "Specific refinements were made in response to feedback, with reasons noted",
+        "Limitations that cannot be fixed have been acknowledged and explained honestly",
+        "The group can articulate what they would do differently if they started again",
+        "The poster tells the full project story from Empathise through to Test, including AI use"
       ]
     }
   ];
 
   var track = document.getElementById('tlTrack');
   if (!track) return;
-  var connectors = [];
 
-  function showItems(detail) {
-    var items = detail.querySelectorAll('li');
-    items.forEach(function (item, idx) {
-      item.style.transition = 'none';
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(10px)';
-      setTimeout(function () {
-        item.style.transition = 'opacity 0.32s ease ' + (0.08 + idx * 0.07) + 's, transform 0.32s ease ' + (0.08 + idx * 0.07) + 's';
-        item.style.opacity = '1';
-        item.style.transform = 'translateY(0)';
-      }, 20);
-    });
-  }
-
-  function hideItems(detail) {
-    detail.querySelectorAll('li').forEach(function (item) {
-      item.style.transition = 'none';
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(10px)';
-    });
-  }
-
-  steps.forEach(function (step, i) {
+  weeks.forEach(function (w, i) {
+    /* connector arrow between cards */
     if (i > 0) {
       var conn = document.createElement('div');
       conn.className = 'tl-connector';
       conn.setAttribute('aria-hidden', 'true');
-      conn.innerHTML = '<svg width="40" height="30" viewBox="0 0 40 30" fill="none"><path d="M2 15h30M24 6l10 9-10 9" stroke="#C1B5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      connectors.push(conn);
+      conn.innerHTML = '<svg width="32" height="22" viewBox="0 0 32 22" fill="none"><path d="M1 11h24M18 4l8 7-8 7" stroke="#c0c0c0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
       track.appendChild(conn);
     }
 
@@ -388,43 +323,52 @@
     wrap.className = 'tl-step-wrap';
     wrap.setAttribute('role', 'listitem');
 
-    var detailId = 'tl-detail-' + i;
-    var isCurrent = (i === activeStage);
+    var detailId = 'tl-detail-' + w.week;
+    var state = w.week === ACTIVE_WEEK ? 'is-active' : (w.week < ACTIVE_WEEK ? 'is-done' : 'is-future');
+    var isActive = w.week === ACTIVE_WEEK;
+    var startOpen = isActive;
 
     var card = document.createElement('div');
-    card.className = 'tl-card' + (isCurrent ? ' tl-current' : '');
+    card.className = 'tl-card ' + state;
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-expanded', 'false');
+    card.setAttribute('aria-expanded', startOpen ? 'true' : 'false');
     card.setAttribute('aria-controls', detailId);
-    card.setAttribute('aria-label', 'Stage ' + (i + 1) + ': ' + step.title);
+    card.setAttribute('aria-label', 'Week ' + w.week + ': ' + w.phase);
 
-    var badgeText = isCurrent
-      ? step.week + ' \u00B7 You\u2019re here'
-      : 'During \u00B7 ' + step.week;
+    var headHTML =
+      '<div class="tl-card-head">' +
+        '<div class="tl-week-label">' +
+          'Week ' + w.week +
+          '<span class="tl-phase-pill">' + w.phase + '</span>' +
+        '</div>' +
+        (isActive ? '<div class="tl-you-here">You are here</div>' : '') +
+      '</div>';
 
-    var hintText = isCurrent ? 'See what strong work looks like' : 'What strong work looks like';
-
-    card.innerHTML =
-      '<div class="tl-week-badge">\uD83D\uDCC5 ' + badgeText + '</div>' +
+    var bodyHTML =
       '<div class="tl-card-body">' +
-        '<div class="tl-card-top">' +
-          '<span class="tl-num" aria-hidden="true">' + (i + 1) + '</span>' +
-          '<span class="tl-icon" aria-hidden="true">' + step.icon + '</span>' +
-        '</div>' +
-        '<div class="tl-title">' + step.title + '</div>' +
-        '<p class="tl-desc">' + step.desc + '</p>' +
+        '<div class="tl-title">Week ' + w.week + ' · ' + w.phase + '</div>' +
+        '<p class="tl-question">' + w.question + '</p>' +
         '<div class="tl-toggle-hint" aria-hidden="true">' +
-          hintText +
-          '<svg class="tl-chevron" width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 4.5l4.5 4.5 4.5-4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-        '</div>' +
-      '</div>' +
-      '<div class="tl-detail" id="' + detailId + '" role="region" aria-label="Strong work indicators for stage ' + (i + 1) + '">' +
-        '<div class="tl-detail-inner">' +
-          '<div class="tl-strong-label">What strong work looks like</div>' +
-          '<ul>' + step.strong.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
+          'What strong work looks like' +
+          '<svg class="tl-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
         '</div>' +
       '</div>';
+
+    var detailHTML =
+      '<div class="tl-detail' + (startOpen ? ' tl-open' : '') + '" id="' + detailId + '" role="region" aria-label="What strong work looks like in week ' + w.week + '">' +
+        '<div class="tl-detail-inner">' +
+          '<div class="tl-strong-label">What strong work looks like</div>' +
+          '<ul>' + w.strong.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
+        '</div>' +
+      '</div>';
+
+    card.innerHTML = headHTML + bodyHTML + detailHTML;
+
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
 
     function toggle() {
       var detail = document.getElementById(detailId);
@@ -432,43 +376,24 @@
       if (expanded) {
         card.setAttribute('aria-expanded', 'false');
         detail.classList.remove('tl-open');
-        hideItems(detail);
-        if (i > 0) connectors[i - 1].classList.remove('tl-adj');
-        if (i < steps.length - 1) connectors[i].classList.remove('tl-adj');
       } else {
         card.setAttribute('aria-expanded', 'true');
-        card.classList.remove('tl-glow');
-        void card.offsetWidth;
-        card.classList.add('tl-glow');
         detail.classList.add('tl-open');
-        showItems(detail);
-        if (i > 0) connectors[i - 1].classList.add('tl-adj');
-        if (i < steps.length - 1) connectors[i].classList.add('tl-adj');
       }
       notifyParent();
     }
-
-    card.addEventListener('click', toggle);
-    card.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
-    });
 
     wrap.appendChild(card);
     track.appendChild(wrap);
   });
 
-  /* Equalise card body heights and detail inner heights after render */
-  requestAnimationFrame(function () {
-    var bodies = track.querySelectorAll('.tl-card-body');
-    var maxBody = 0;
-    bodies.forEach(function (b) { maxBody = Math.max(maxBody, b.offsetHeight); });
-    bodies.forEach(function (b) { b.style.height = maxBody + 'px'; });
-
-    var inners = track.querySelectorAll('.tl-detail-inner');
-    var maxInner = 0;
-    inners.forEach(function (el) { maxInner = Math.max(maxInner, el.scrollHeight); });
-    inners.forEach(function (el) { el.style.minHeight = maxInner + 'px'; });
-  });
+  /* scroll active card into view */
+  var activeCard = track.querySelector('.is-active');
+  if (activeCard) {
+    setTimeout(function () {
+      activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }, 80);
+  }
 
   function notifyParent() {
     setTimeout(function () {
