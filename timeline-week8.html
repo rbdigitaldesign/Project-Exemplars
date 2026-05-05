@@ -64,9 +64,7 @@
   .tl-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.13); }
   .tl-card:focus-visible { box-shadow: 0 0 0 3px rgba(131,107,255,0.35); }
 
-  .tl-card-head {
-    padding: 0.65rem 0.9rem 0.55rem;
-  }
+  .tl-card-head { padding: 0.65rem 0.9rem 0.55rem; }
   .tl-week-label {
     font-size: 0.72rem;
     font-weight: 700;
@@ -98,7 +96,6 @@
     display: flex;
     flex-direction: column;
   }
-
   .tl-title {
     font-family: 'Roboto Serif', Georgia, serif;
     font-size: 0.88rem;
@@ -106,14 +103,12 @@
     line-height: 1.35;
     margin-bottom: 0.35rem;
   }
-
   .tl-question {
     font-size: 0.77rem;
     line-height: 1.55;
     margin: 0;
     flex: 1;
   }
-
   .tl-toggle-hint {
     font-size: 0.72rem;
     display: flex;
@@ -136,12 +131,9 @@
     overflow: hidden;
     transition: max-height 0.42s cubic-bezier(0.4,0,0.2,1);
   }
-  .tl-detail.tl-open { max-height: 600px; }
+  .tl-detail.tl-open { max-height: 620px; }
 
-  .tl-detail-inner {
-    padding: 0.7rem 0.9rem 1rem;
-  }
-
+  .tl-detail-inner { padding: 0.7rem 0.9rem 1rem; }
   .tl-strong-label {
     font-size: 0.67rem;
     font-weight: 700;
@@ -149,7 +141,6 @@
     letter-spacing: 0.07em;
     margin-bottom: 0.5rem;
   }
-
   .tl-detail ul { list-style: none; padding: 0; margin: 0; }
   .tl-detail ul li {
     font-size: 0.76rem;
@@ -207,7 +198,7 @@
   @media (max-width: 600px) {
     body { padding: 0.9rem 0.75rem 1.5rem; }
     .tl-card { width: 185px; }
-    .tl-detail.tl-open { max-height: 500px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .tl-detail.tl-open { max-height: 520px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   }
 </style>
 </head>
@@ -220,7 +211,7 @@
   Scroll to see all weeks — click any card to expand the detail
 </p>
 
-<div class="tl-track" id="tlTrack" role="list" aria-label="Project timeline weeks 4 to 8"></div>
+<div class="tl-track" id="tlTrack" role="list" aria-label="Project timeline weeks 4 to 10"></div>
 
 <script>
 (function () {
@@ -286,6 +277,19 @@
         "The group can articulate what they would do differently if they started again",
         "The poster tells the full project story from Empathise through to Test, including AI use"
       ]
+    },
+    {
+      week: 9,
+      phase: "Reflect and Refine",
+      question: "How has our thinking developed, and what would we do differently if we had more time or resources?",
+      strong: [
+        "You can explain how your understanding of the problem shifted from Empathise through to Test",
+        "You've noted what feedback or iteration changed in your design decisions",
+        "Your reflection is honest: including what didn't work and why",
+        "You've connected your learning to the bigger picture of the project and your individual role in it",
+        "You can explain what you would do differently with more time or resources, including potential implementation steps",
+        "You can clearly describe your own individual contribution: not just what the group did, but what you specifically did and learned"
+      ]
     }
   ];
 
@@ -309,6 +313,7 @@
     var state = w.week === ACTIVE_WEEK ? 'is-active' : (w.week < ACTIVE_WEEK ? 'is-done' : 'is-future');
     var isActive = w.week === ACTIVE_WEEK;
     var startOpen = isActive;
+    var weekLabel = w.week === 9 ? 'Weeks 9–10' : 'Week ' + w.week;
 
     var card = document.createElement('div');
     card.className = 'tl-card ' + state;
@@ -316,12 +321,12 @@
     card.setAttribute('role', 'button');
     card.setAttribute('aria-expanded', startOpen ? 'true' : 'false');
     card.setAttribute('aria-controls', detailId);
-    card.setAttribute('aria-label', 'Week ' + w.week + ': ' + w.phase);
+    card.setAttribute('aria-label', weekLabel + ': ' + w.phase);
 
     var headHTML =
       '<div class="tl-card-head">' +
         '<div class="tl-week-label">' +
-          'Week ' + w.week +
+          weekLabel +
           '<span class="tl-phase-pill">' + w.phase + '</span>' +
         '</div>' +
         (isActive ? '<div class="tl-you-here">You are here</div>' : '') +
@@ -329,7 +334,7 @@
 
     var bodyHTML =
       '<div class="tl-card-body">' +
-        '<div class="tl-title">Week ' + w.week + ' · ' + w.phase + '</div>' +
+        '<div class="tl-title">' + weekLabel + ' · ' + w.phase + '</div>' +
         '<p class="tl-question">' + w.question + '</p>' +
         '<div class="tl-toggle-hint" aria-hidden="true">' +
           'What strong work looks like' +
@@ -338,7 +343,7 @@
       '</div>';
 
     var detailHTML =
-      '<div class="tl-detail' + (startOpen ? ' tl-open' : '') + '" id="' + detailId + '" role="region" aria-label="What strong work looks like in week ' + w.week + '">' +
+      '<div class="tl-detail' + (startOpen ? ' tl-open' : '') + '" id="' + detailId + '" role="region" aria-label="What strong work looks like in ' + weekLabel + '">' +
         '<div class="tl-detail-inner">' +
           '<div class="tl-strong-label">What strong work looks like</div>' +
           '<ul>' + w.strong.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' +
